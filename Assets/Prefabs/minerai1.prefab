@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 730053921}
   - component: {fileID: 730053920}
   - component: {fileID: 730053919}
+  - component: {fileID: 6874919262149344246}
   m_Layer: 0
   m_Name: minerai1
-  m_TagString: Untagged
+  m_TagString: item_mana
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -78,3 +79,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &6874919262149344246
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730053918}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0131847495, y: 0.010985968, z: 0.016062582}
+  m_Center: {x: -0.00012608872, y: 0.00048380846, z: 0.007974998}
