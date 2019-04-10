@@ -2167,6 +2167,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Meshtint Free Knight
       objectReference: {fileID: 0}
+    - target: {fileID: 1022148595836406, guid: 5b5b1958cdf88ce49989e326859b9572, type: 3}
+      propertyPath: m_TagString
+      value: PlayerTag
+      objectReference: {fileID: 0}
     - target: {fileID: 4079118292684216, guid: 5b5b1958cdf88ce49989e326859b9572, type: 3}
       propertyPath: m_LocalPosition.x
       value: 96.71
@@ -5147,6 +5151,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.379866, y: 1.9902079, z: 1}
   m_Center: {x: -0.071904175, y: 1.0180476, z: 0}
+--- !u!114 &1319802233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319802225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b40e415dbcb7f93a948423a402b387b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firePrefabs: {fileID: 80814973, guid: 01490be430b97317382e4ccc5a8f100e, type: 3}
+  offsetHeight: 1
+  offset: 5
+  thrust: 3
 --- !u!1001 &1322719183
 PrefabInstance:
   m_ObjectHideFlags: 0
