@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class CameraControler : MonoBehaviour
+public class CameraControler : NetworkBehaviour
 {
     [SerializeField]
     private float speed;
@@ -12,22 +13,29 @@ public class CameraControler : MonoBehaviour
 
     private Animator animator;
 
-    [SerializeField]
     private Camera camera3rd;
 
-    [SerializeField]
     private Camera cameraFPS;
     // Start is called before the first frame update
     void Start()
     {
+        if (!isLocalPlayer)
+            return; 
+
         animator = GetComponent<Animator>();
-        cameraFPS.enabled = false;
+        camera3rd = transform.Find("Camera3rd").GetComponent<Camera>();
+        // cameraFPS = transform.Find("CameraFPS").GetComponent<Camera>();
+        // cameraFPS.enabled = false;
         camera3rd.enabled = true;
+       
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!isLocalPlayer)
+            return;
+
         float translation = Input.GetAxis("Vertical") * speed;
         float rotation = Input.GetAxis("Horizontal") * rotationSpeed;
 
