@@ -65,7 +65,6 @@ public class FlameThrower : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             CmdFire();
-
         }
     }
 }

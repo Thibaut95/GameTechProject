@@ -9,6 +9,9 @@ public class CameraControler : NetworkBehaviour
     private float speed;
 
     [SerializeField]
+    private float jump;
+
+    [SerializeField]
     private float rotationSpeed;
 
     private Animator animator;
@@ -24,8 +27,8 @@ public class CameraControler : NetworkBehaviour
 
         animator = GetComponent<Animator>();
         camera3rd = transform.Find("Camera3rd").GetComponent<Camera>();
-        // cameraFPS = transform.Find("CameraFPS").GetComponent<Camera>();
-        // cameraFPS.enabled = false;
+        cameraFPS = transform.Find("Camera2").GetComponent<Camera>();
+        cameraFPS.enabled = false;
         camera3rd.enabled = true;
        
     }
@@ -46,14 +49,24 @@ public class CameraControler : NetworkBehaviour
 
         animator.SetBool("Moving",Input.GetAxis("Vertical")!=0);
 
-        if(Input.GetKeyDown(KeyCode.F))
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            transform.GetComponent<Rigidbody>().AddForce(new Vector3(0,jump,0),ForceMode.Impulse);
+            animator.SetTrigger("Jump");
+        }
+
+        if(Input.GetKeyDown(KeyCode.C))
         {
             animator.SetTrigger("Slash");
         }
+
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            animator.SetTrigger("Death");
+        }
         
-        if(Input.GetKeyDown(KeyCode.C))
+        if(Input.GetKeyDown(KeyCode.G))
         {   
-            Debug.Log("pressed");
             cameraFPS.enabled = !cameraFPS.enabled;
             camera3rd.enabled = !camera3rd.enabled;
         }
