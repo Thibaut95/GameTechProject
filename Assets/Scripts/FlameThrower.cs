@@ -53,7 +53,7 @@ public class FlameThrower : NetworkBehaviour
         NetworkServer.Spawn(fire);
 
         // when the bullet is destroyed on the server it will automaticaly be destroyed on clients
-        Destroy(fire, 3.0f);
+        Destroy(fire, 2.0f);
     }
 
     // Update is called once per frame
