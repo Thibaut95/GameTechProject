@@ -11,17 +11,20 @@ public class ItemCollector : MonoBehaviour
     [SerializeField]
     private int mana = 30;
 
-    [SerializeField]
+
     private Slider healthBar;
 
-    [SerializeField]
+
     private Slider manaBar;
 
 
     private void Start()
     {
+        healthBar=GameObject.Find("HUD").transform.Find("Health Bar").GetComponent<Slider>();
+        manaBar=GameObject.Find("HUD").transform.Find("Mana Bar").GetComponent<Slider>();
         healthBar.value = health;
         manaBar.value = mana;
+
     }
 
     private void OnTriggerEnter(Collider other)
