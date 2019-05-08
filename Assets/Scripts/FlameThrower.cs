@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class FlameThrower : MonoBehaviour
+public class FlameThrower : NetworkBehaviour
 {
 
     [SerializeField]
@@ -30,6 +31,9 @@ public class FlameThrower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!isLocalPlayer)
+            return;
+
         if (Input.GetKeyDown(KeyCode.F))
         {
             GameObject fire = Instantiate(firePrefabs);
