@@ -39,8 +39,13 @@ public class ItemGenerator : NetworkBehaviour
                 if (height <= transform.position.y)
                 {
                     GameObject item;
-                    if(i<nbItem/2)item = Instantiate(items[0]);
-                    else item = Instantiate(items[1]);
+                    if(i<nbItem/2){
+                        item = Instantiate(items[0]);
+                    }
+                    else{
+                        item = Instantiate(items[1]);
+                    }    
+
                     Vector3 position = new Vector3(posX, height+offset, posZ);
                     item.transform.position = position;
                     i++;
@@ -49,6 +54,10 @@ public class ItemGenerator : NetworkBehaviour
                 }   
             }
         }
+    }
+
+    public int getMaxCollectible(){
+        return (int) nbItem/2;
     }
 
     // Update is called once per frame

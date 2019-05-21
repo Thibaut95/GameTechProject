@@ -88,19 +88,25 @@ public class CameraControler : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isLocalPlayer)
-            return;
+        // if (!isLocalPlayer)
+        //     return;
 
         Debug.Log(other.gameObject.tag);
 
-        if (other.gameObject.tag == "weapon")
+        if (other.gameObject.tag == "weapon" && isLocalPlayer)
         {
             this.GetComponent<ItemCollector>().removeHealth();
         }
-        else if (other.gameObject.tag == "item_health" || other.gameObject.tag == "item_mana")
+        else if (other.gameObject.tag == "item_health" || other.gameObject.tag == "item_collectible")
         {
-            this.GetComponent<ItemCollector>().increaseItem(other.gameObject.tag);
-            CmdDestroyItem(other.gameObject);
+            if (isLocalPlayer){
+                this.GetComponent<ItemCollector>().increaseItem(other.gameObject.tag);
+                CmdDestroyItem(other.gameObject);
+            }
+            else{
+                CmdDestroyItem(other.gameObject);
+            }
+            
         }
         
 

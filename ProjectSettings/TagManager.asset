@@ -6,8 +6,8 @@ TagManager:
   tags:
   - PlayerTag
   - item_health
-  - item_mana
   - weapon
+  - item_collectible
   layers:
   - Default
   - TransparentFX

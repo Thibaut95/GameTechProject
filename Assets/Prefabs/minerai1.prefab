@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5390815047109584833}
   m_Layer: 0
   m_Name: minerai1
-  m_TagString: item_mana
+  m_TagString: item_collectible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

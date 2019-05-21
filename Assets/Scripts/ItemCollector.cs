@@ -9,21 +9,22 @@ public class ItemCollector : MonoBehaviour
     private int health = 100;
 
     [SerializeField]
-    private int mana = 30;
+    private int score = 0;
 
+
+    [SerializeField]
+    private int MaxCollectible;
 
     private Slider healthBar;
-
-
-    private Slider manaBar;
-
+    private Text playerscore_txt;
+    private Text opponent_txt;
 
     private void Start()
     {
         healthBar=GameObject.Find("HUD").transform.Find("Health Bar").GetComponent<Slider>();
-        manaBar=GameObject.Find("HUD").transform.Find("Mana Bar").GetComponent<Slider>();
         healthBar.value = health;
-        manaBar.value = mana;
+        playerscore_txt=GameObject.Find("HUD").transform.Find("player score").GetComponent<Text>();
+        opponent_txt=GameObject.Find("HUD").transform.Find("opponent score").GetComponent<Text>();
 
     }
 
@@ -40,10 +41,10 @@ public class ItemCollector : MonoBehaviour
         // }
         // else if (other.gameObject.tag == "item_mana")
         // {
-        //     this.mana += 10;
-        //     if (this.mana > 100) this.mana = 100;
+        //     this.score += 10;
+        //     if (this.score > 100) this.score = 100;
         //     Destroy(other.gameObject);
-        //     manaBar.value = this.mana;
+        //     manaBar.value = this.score;
         // }
 
     //    else if (other.gameObject.tag == "weapon")
@@ -73,6 +74,10 @@ public class ItemCollector : MonoBehaviour
         return health > 0;
     }
 
+    public int getScore(){
+        return score;
+    }
+
     public void increaseItem(string type)
     {
         if (type == "item_health")
@@ -81,11 +86,11 @@ public class ItemCollector : MonoBehaviour
             if (this.health > 100) this.health = 100;
             healthBar.value = this.health;
         }
-        else if (type == "item_mana")
+        else if (type == "item_collectible")
         {
-            this.mana += 10;
-            if (this.mana > 100) this.mana = 100;
-            manaBar.value = this.mana;
+            this.score += 1;
+            playerscore_txt.text = "Player score : "+score;
+            opponent_txt.text = "Opponent score : "+(MaxCollectible - GameObject.FindGameObjectsWithTag("item_collectible").Length - score);
         }
     }
 
