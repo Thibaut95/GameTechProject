@@ -78,6 +78,20 @@ public class CameraControler : NetworkBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!isLocalPlayer)
+            return;
+
+        Debug.Log(other.gameObject.tag);
+
+        if (other.gameObject.tag == "weapon")
+        {
+            this.GetComponent<ItemCollector>().removeHealth();
+        }
+
+    }
+
     void OnCollisionEnter(Collision theCollision)
     {
         if (theCollision.gameObject.name == "terrain")

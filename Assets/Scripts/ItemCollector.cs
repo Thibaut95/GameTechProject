@@ -46,11 +46,11 @@ public class ItemCollector : MonoBehaviour
             manaBar.value = this.mana;
         }
 
-       else if (other.gameObject.tag == "weapon")
-       {
-           this.health -= 20;
-           healthBar.value = this.health;
-       }
+    //    else if (other.gameObject.tag == "weapon")
+    //    {
+    //        this.health -= 20;
+    //        healthBar.value = this.health;
+    //    }
 
     }
 
@@ -63,6 +63,14 @@ public class ItemCollector : MonoBehaviour
     public void setHealth(int health)
     {
         this.health = health;
+    }
+
+    public bool removeHealth()
+    {
+        this.health -= 20;
+        healthBar.value = this.health;
+
+        return health > 0;
     }
 
 }
