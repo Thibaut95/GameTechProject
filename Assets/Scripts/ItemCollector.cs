@@ -29,6 +29,7 @@ public class ItemCollector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.tag);
 
         if (other.gameObject.tag == "item_health")
         {
@@ -45,7 +46,12 @@ public class ItemCollector : MonoBehaviour
             manaBar.value = this.mana;
         }
 
-       
+       else if (other.gameObject.tag == "weapon")
+       {
+           this.health -= 20;
+           healthBar.value = this.health;
+       }
+
     }
 
     public int getHealth()

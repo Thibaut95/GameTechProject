@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - PlayerTag
+  - item_health
+  - item_mana
+  - weapon
   layers:
   - Default
   - TransparentFX
