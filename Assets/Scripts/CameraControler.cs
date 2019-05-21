@@ -20,18 +20,24 @@ public class CameraControler : NetworkBehaviour
 
     private Camera cameraFPS;
     // Start is called before the first frame update
+
+    private bool isgrounded = false;
+
     void Start()
     {
         if (!isLocalPlayer)
-            return; 
+            return;
 
         animator = GetComponent<Animator>();
         camera3rd = transform.Find("Camera3rd").GetComponent<Camera>();
         cameraFPS = transform.Find("Camera2").GetComponent<Camera>();
         cameraFPS.enabled = false;
         camera3rd.enabled = true;
-       
+
     }
+
+
+
 
     // Update is called once per frame
     void Update()
@@ -44,33 +50,48 @@ public class CameraControler : NetworkBehaviour
 
         // Debug.Log(translation);
 
-        this.transform.Translate(0,0,translation);
+        this.transform.Translate(0, 0, translation);
         this.transform.Rotate(0, rotation, 0);
 
-        animator.SetBool("Moving",Input.GetAxis("Vertical")!=0);
+        animator.SetBool("Moving", Input.GetAxis("Vertical") != 0);
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && isgrounded)
         {
-            transform.GetComponent<Rigidbody>().AddForce(new Vector3(0,jump,0),ForceMode.Impulse);
+            transform.GetComponent<Rigidbody>().AddForce(new Vector3(0, jump, 0), ForceMode.Impulse);
             animator.SetTrigger("Jump");
         }
 
-        if(Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             animator.SetTrigger("Slash");
         }
 
-        if(Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K))
         {
             animator.SetTrigger("Death");
         }
-        
-        if(Input.GetKeyDown(KeyCode.G))
-        {   
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
             cameraFPS.enabled = !cameraFPS.enabled;
             camera3rd.enabled = !camera3rd.enabled;
         }
     }
 
+    void OnCollisionEnter(Collision theCollision)
+    {
+        if (theCollision.gameObject.name == "terrain")
+        {
+            isgrounded = true;
+        }
+    }
+
+    void OnCollisionExit(Collision theCollision)
+    {
+        if (theCollision.gameObject.name == "terrain")
+        {
+            isgrounded = false;
+        }
+    }
 
 }
