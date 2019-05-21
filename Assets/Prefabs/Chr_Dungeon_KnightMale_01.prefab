@@ -1834,8 +1834,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.42942426, y: 1.523464, z: 0.16165547}
-  m_Center: {x: 0.00000040164494, y: 0.50424147, z: -0.00000028249002}
+  m_Size: {x: 0.09194649, y: 0.92968196, z: 0.08009202}
+  m_Center: {x: -0.0029178509, y: 0.7103935, z: -0.00017190288}
 --- !u!1 &1710433383929498473
 GameObject:
   m_ObjectHideFlags: 0
@@ -8714,10 +8714,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9130484405055415412}
     m_Modifications:
-    - target: {fileID: 1028550697772930, guid: 00890e5a751e94c49abb99f2f05c8607, type: 3}
-      propertyPath: m_Name
-      value: Prop_ShieldViking_01
-      objectReference: {fileID: 0}
     - target: {fileID: 4851478304714240, guid: 00890e5a751e94c49abb99f2f05c8607, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.018
@@ -8769,6 +8765,10 @@ PrefabInstance:
     - target: {fileID: 4851478304714240, guid: 00890e5a751e94c49abb99f2f05c8607, type: 3}
       propertyPath: m_LocalScale.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1028550697772930, guid: 00890e5a751e94c49abb99f2f05c8607, type: 3}
+      propertyPath: m_Name
+      value: Prop_ShieldViking_01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00890e5a751e94c49abb99f2f05c8607, type: 3}
@@ -8851,15 +8851,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b51c1ac56d74dea4780d54225834c595, type: 3}
---- !u!1 &1704358679639672381 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1871691174411856, guid: b51c1ac56d74dea4780d54225834c595,
-    type: 3}
-  m_PrefabInstance: {fileID: 1702852670908446829}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1707198341175235235 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4662633486641870, guid: b51c1ac56d74dea4780d54225834c595,
+    type: 3}
+  m_PrefabInstance: {fileID: 1702852670908446829}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1704358679639672381 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1871691174411856, guid: b51c1ac56d74dea4780d54225834c595,
     type: 3}
   m_PrefabInstance: {fileID: 1702852670908446829}
   m_PrefabAsset: {fileID: 0}
