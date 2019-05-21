@@ -15,6 +15,7 @@ public class CameraControler : NetworkBehaviour
     private float rotationSpeed;
 
     private Animator animator;
+    private NetworkAnimator networkAnimator;
 
     private Camera camera3rd;
 
@@ -29,6 +30,7 @@ public class CameraControler : NetworkBehaviour
             return;
 
         animator = GetComponent<Animator>();
+        networkAnimator = GetComponent<NetworkAnimator>();
         camera3rd = transform.Find("Camera3rd").GetComponent<Camera>();
         cameraFPS = transform.Find("Camera2").GetComponent<Camera>();
         cameraFPS.enabled = false;
@@ -58,17 +60,17 @@ public class CameraControler : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isgrounded)
         {
             transform.GetComponent<Rigidbody>().AddForce(new Vector3(0, jump, 0), ForceMode.Impulse);
-            animator.SetTrigger("Jump");
+            networkAnimator.SetTrigger("Jump");
         }
 
         if (Input.GetKeyDown(KeyCode.C))
         {
-            animator.SetTrigger("Slash");
+            networkAnimator.SetTrigger("Slash");
         }
 
         if (Input.GetKeyDown(KeyCode.K))
         {
-            animator.SetTrigger("Death");
+            networkAnimator.SetTrigger("Death");
         }
 
         if (Input.GetKeyDown(KeyCode.G))
