@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Networking;
 
-public class ItemGenerator : MonoBehaviour
+public class ItemGenerator : NetworkBehaviour
 {
     [SerializeField]
     private int nbItem;
@@ -16,6 +17,8 @@ public class ItemGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(!isServer)
+            return;
         System.Random random = new System.Random();
         int i = 0;
         while (i < nbItem)
@@ -42,6 +45,7 @@ public class ItemGenerator : MonoBehaviour
                     item.transform.position = position;
                     i++;
                     item.transform.parent = transform;
+                    NetworkServer.Spawn(item);
                 }   
             }
         }

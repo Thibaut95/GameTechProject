@@ -31,20 +31,20 @@ public class ItemCollector : MonoBehaviour
     {
         Debug.Log(other.gameObject.tag);
 
-        if (other.gameObject.tag == "item_health")
-        {
-            this.health += 10;
-            if (this.health > 100) this.health = 100;
-            Destroy(other.gameObject);
-            healthBar.value = this.health;
-        }
-        else if (other.gameObject.tag == "item_mana")
-        {
-            this.mana += 10;
-            if (this.mana > 100) this.mana = 100;
-            Destroy(other.gameObject);
-            manaBar.value = this.mana;
-        }
+        // if (other.gameObject.tag == "item_health")
+        // {
+        //     this.health += 10;
+        //     if (this.health > 100) this.health = 100;
+        //     Destroy(other.gameObject);
+        //     healthBar.value = this.health;
+        // }
+        // else if (other.gameObject.tag == "item_mana")
+        // {
+        //     this.mana += 10;
+        //     if (this.mana > 100) this.mana = 100;
+        //     Destroy(other.gameObject);
+        //     manaBar.value = this.mana;
+        // }
 
     //    else if (other.gameObject.tag == "weapon")
     //    {
@@ -71,6 +71,22 @@ public class ItemCollector : MonoBehaviour
         healthBar.value = this.health;
 
         return health > 0;
+    }
+
+    public void increaseItem(string type)
+    {
+        if (type == "item_health")
+        {
+            this.health += 10;
+            if (this.health > 100) this.health = 100;
+            healthBar.value = this.health;
+        }
+        else if (type == "item_mana")
+        {
+            this.mana += 10;
+            if (this.mana > 100) this.mana = 100;
+            manaBar.value = this.mana;
+        }
     }
 
 }

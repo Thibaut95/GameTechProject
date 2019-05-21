@@ -80,6 +80,12 @@ public class CameraControler : NetworkBehaviour
         }
     }
 
+    [Command]
+    private void CmdDestroyItem(GameObject item)
+    {
+        NetworkServer.Destroy(item);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!isLocalPlayer)
@@ -91,6 +97,12 @@ public class CameraControler : NetworkBehaviour
         {
             this.GetComponent<ItemCollector>().removeHealth();
         }
+        else if (other.gameObject.tag == "item_health" || other.gameObject.tag == "item_mana")
+        {
+            this.GetComponent<ItemCollector>().increaseItem(other.gameObject.tag);
+            CmdDestroyItem(other.gameObject);
+        }
+        
 
     }
 
