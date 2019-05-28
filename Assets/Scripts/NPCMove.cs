@@ -35,18 +35,14 @@ public class NPCMove : MonoBehaviour
 
     }
 
-    void Resume()
+    void Update()
     {
-        if (Time.time - saved_time > 3)
+        if (Time.time - saved_time > 2)
         {
-            _navMeshAgent.isStopped = true;
-
             _destination = FindClosestPlayer().transform;
             setDestination();
 
             saved_time = Time.time;
-
-            _navMeshAgent.isStopped = false;
         }
     }
 

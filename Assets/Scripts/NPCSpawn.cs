@@ -14,6 +14,7 @@ public class NPCSpawn : NetworkBehaviour
 
     private float saved_time;
     // Start is called before the first frame update
+
     void Start()
     {
         saved_time = Time.time;
@@ -22,7 +23,8 @@ public class NPCSpawn : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.time - saved_time > 5)
+
+        if (Time.time - saved_time > 30)
         {
 
             GameObject npc = Instantiate(NPC);
@@ -32,7 +34,7 @@ public class NPCSpawn : NetworkBehaviour
             npc.GetComponent<NavMeshAgent>().enabled = false;
 
             npc.transform.position = this.transform.position;
-            npc.transform.parent = transform;
+            // npc.transform.parent = transform;
 
             npc.GetComponent<NavMeshAgent>().enabled = true;
 
