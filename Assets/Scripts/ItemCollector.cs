@@ -68,7 +68,7 @@ public class ItemCollector : MonoBehaviour
 
     public bool removeHealth()
     {
-        this.health -= 20;
+        this.health -= 5;
         healthBar.value = this.health;
 
         return health > 0;
@@ -78,7 +78,7 @@ public class ItemCollector : MonoBehaviour
         return score;
     }
 
-    public void increaseItem(string type)
+    public bool increaseItem(string type)
     {
         if (type == "item_health")
         {
@@ -91,7 +91,11 @@ public class ItemCollector : MonoBehaviour
             this.score += 1;
             playerscore_txt.text = "Player score : "+score;
             opponent_txt.text = "Opponent score : "+(MaxCollectible - GameObject.FindGameObjectsWithTag("item_collectible").Length - score);
+
+            return (GameObject.FindGameObjectsWithTag("item_collectible").Length) > 0;
+
         }
+        return false;
     }
 
 }

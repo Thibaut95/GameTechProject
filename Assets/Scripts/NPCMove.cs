@@ -1,0 +1,82 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class NPCMove : MonoBehaviour
+{
+
+    [SerializeField]
+    Transform _destination;
+
+    NavMeshAgent _navMeshAgent;
+
+    float saved_time;
+
+    bool navMeshToggle = true;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        _navMeshAgent = this.GetComponent<NavMeshAgent>();
+
+        if (_navMeshAgent != null)
+        {
+
+            if (_destination == null)
+            {
+                _destination = FindClosestPlayer().transform;
+            }
+
+            setDestination();
+
+            saved_time = Time.time;
+        }
+
+    }
+
+    void Resume()
+    {
+        if (Time.time - saved_time > 3)
+        {
+            _navMeshAgent.isStopped = true;
+
+            _destination = FindClosestPlayer().transform;
+            setDestination();
+
+            saved_time = Time.time;
+
+            _navMeshAgent.isStopped = false;
+        }
+    }
+
+    public void setDestination()
+    {
+        Debug.Log("I am a robot");
+        if (_destination != null)
+        {
+            Vector3 targetVector = _destination.transform.position;
+            _navMeshAgent.SetDestination(targetVector);
+        }
+    }
+
+    public GameObject FindClosestPlayer()
+    {
+        GameObject[] gos;
+        gos = GameObject.FindGameObjectsWithTag("Player");
+        GameObject closest = null;
+        float distance = Mathf.Infinity;
+        Vector3 position = transform.position;
+        foreach (GameObject go in gos)
+        {
+            Vector3 diff = go.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+            if (curDistance < distance)
+            {
+                closest = go;
+                distance = curDistance;
+            }
+        }
+        return closest;
+    }
+}

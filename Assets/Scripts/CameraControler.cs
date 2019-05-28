@@ -24,6 +24,10 @@ public class CameraControler : NetworkBehaviour
 
     private bool isgrounded = false;
 
+    private bool gameOver = false;
+
+    private GameObject gameOverCanvas = null;
+
     void Start()
     {
         if (!isLocalPlayer)
@@ -35,6 +39,9 @@ public class CameraControler : NetworkBehaviour
         cameraFPS = transform.Find("Camera2").GetComponent<Camera>();
         cameraFPS.enabled = false;
         camera3rd.enabled = true;
+        gameOverCanvas = GameObject.Find("tamere");
+        gameOverCanvas.SetActive(false);
+        Debug.Log(gameOverCanvas);
 
     }
 
@@ -46,6 +53,12 @@ public class CameraControler : NetworkBehaviour
     {
         if (!isLocalPlayer)
             return;
+
+        if (gameOver){
+            gameOverCanvas.SetActive(true);
+            Time.timeScale = 0;
+            return;
+        }
 
         float translation = Input.GetAxis("Vertical") * speed;
         float rotation = Input.GetAxis("Horizontal") * rotationSpeed;
@@ -86,6 +99,12 @@ public class CameraControler : NetworkBehaviour
         NetworkServer.Destroy(item);
     }
 
+
+    [Command]
+    private void CmdSetGameOver(bool value){
+        gameOver = value;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         // if (!isLocalPlayer)
@@ -95,17 +114,27 @@ public class CameraControler : NetworkBehaviour
 
         if (other.gameObject.tag == "weapon" && isLocalPlayer)
         {
-            this.GetComponent<ItemCollector>().removeHealth();
+            bool isPlayerDead = !this.GetComponent<ItemCollector>().removeHealth();
+            gameOver = isPlayerDead || gameOver;
+            if (gameOver){
+                CmdSetGameOver(true);
+            }
         }
         else if (other.gameObject.tag == "item_health" || other.gameObject.tag == "item_collectible")
         {
             if (isLocalPlayer){
-                this.GetComponent<ItemCollector>().increaseItem(other.gameObject.tag);
+                bool isAllCollected = !this.GetComponent<ItemCollector>().increaseItem(other.gameObject.tag);
                 CmdDestroyItem(other.gameObject);
+                gameOver = isAllCollected || gameOver;
+                if (gameOver){
+                    CmdSetGameOver(true);
+                }
             }
             else{
                 CmdDestroyItem(other.gameObject);
             }
+
+
             
         }
         

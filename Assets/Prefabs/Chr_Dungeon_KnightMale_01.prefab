@@ -4138,7 +4138,7 @@ GameObject:
   - component: {fileID: 8188708907130602962}
   m_Layer: 0
   m_Name: Chr_Dungeon_KnightMale_01
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4359,7 +4359,6 @@ MonoBehaviour:
   speed: 0.2
   jump: 5
   rotationSpeed: 2
-  MaxCollectible: 0
 --- !u!114 &7324447997373122220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8716,6 +8715,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9130484405055415412}
     m_Modifications:
+    - target: {fileID: 1028550697772930, guid: 00890e5a751e94c49abb99f2f05c8607, type: 3}
+      propertyPath: m_Name
+      value: Prop_ShieldViking_01
+      objectReference: {fileID: 0}
     - target: {fileID: 4851478304714240, guid: 00890e5a751e94c49abb99f2f05c8607, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.018
@@ -8767,10 +8770,6 @@ PrefabInstance:
     - target: {fileID: 4851478304714240, guid: 00890e5a751e94c49abb99f2f05c8607, type: 3}
       propertyPath: m_LocalScale.y
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1028550697772930, guid: 00890e5a751e94c49abb99f2f05c8607, type: 3}
-      propertyPath: m_Name
-      value: Prop_ShieldViking_01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00890e5a751e94c49abb99f2f05c8607, type: 3}

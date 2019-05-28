@@ -8,6 +8,8 @@ TagManager:
   - item_health
   - weapon
   - item_collectible
+  - game_over_componenent
+  - objectif
   layers:
   - Default
   - TransparentFX

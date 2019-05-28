@@ -15,10 +15,15 @@ public class ItemGenerator : NetworkBehaviour
     [SerializeField]
     private float offset;
     // Start is called before the first frame update
+
+    private float saved_time;
+
     void Start()
     {
-        if(!isServer)
+        if (!isServer)
             return;
+
+
         System.Random random = new System.Random();
         int i = 0;
         while (i < nbItem)
@@ -39,30 +44,33 @@ public class ItemGenerator : NetworkBehaviour
                 if (height <= transform.position.y)
                 {
                     GameObject item;
-                    if(i<nbItem/2){
+                    if (i < nbItem / 2)
+                    {
                         item = Instantiate(items[0]);
                     }
-                    else{
+                    else
+                    {
                         item = Instantiate(items[1]);
-                    }    
+                    }
 
-                    Vector3 position = new Vector3(posX, height+offset, posZ);
+                    Vector3 position = new Vector3(posX, height + offset, posZ);
                     item.transform.position = position;
                     i++;
                     item.transform.parent = transform;
                     NetworkServer.Spawn(item);
-                }   
+                }
             }
         }
     }
 
-    public int getMaxCollectible(){
-        return (int) nbItem/2;
+    public int getMaxCollectible()
+    {
+        return (int)nbItem / 2;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+ 
     }
 }
