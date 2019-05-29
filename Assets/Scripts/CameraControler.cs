@@ -107,7 +107,7 @@ public class CameraControler : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isLocalPlayer)
+        if (!isLocalPlayer && isServer)
             return;
 
         Debug.Log(other.gameObject.tag);
