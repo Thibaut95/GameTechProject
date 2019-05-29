@@ -52,7 +52,7 @@ public class NPCMove : NetworkBehaviour
         }
     }
 
-    public void setDestination()
+    private void setDestination()
     {
         if (!isServer)
             return;
@@ -65,10 +65,8 @@ public class NPCMove : NetworkBehaviour
         }
     }
 
-    public GameObject FindClosestPlayer()
+    private GameObject FindClosestPlayer()
     {
-        if (!isServer)
-            return;
 
         GameObject[] gos;
         gos = GameObject.FindGameObjectsWithTag("Player");
