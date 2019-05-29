@@ -17,12 +17,17 @@ public class NPCSpawn : NetworkBehaviour
 
     void Start()
     {
+        if (!isServer)
+            return;
+            
         saved_time = Time.time;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!isServer)
+            return;
 
         if (Time.time - saved_time > 30)
         {

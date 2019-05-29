@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Networking;
 
-public class NPCMove : MonoBehaviour
+public class NPCMove : NetworkBehaviour
 {
 
-    [SerializeField]
     Transform _destination;
 
     NavMeshAgent _navMeshAgent;
@@ -18,6 +18,9 @@ public class NPCMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!isServer)
+            return;
+
         _navMeshAgent = this.GetComponent<NavMeshAgent>();
 
         if (_navMeshAgent != null)
@@ -37,6 +40,9 @@ public class NPCMove : MonoBehaviour
 
     void Update()
     {
+        if (!isServer)
+            return;
+
         if (Time.time - saved_time > 2)
         {
             _destination = FindClosestPlayer().transform;
@@ -48,6 +54,9 @@ public class NPCMove : MonoBehaviour
 
     public void setDestination()
     {
+        if (!isServer)
+            return;
+
         Debug.Log("I am a robot");
         if (_destination != null)
         {
@@ -58,6 +67,9 @@ public class NPCMove : MonoBehaviour
 
     public GameObject FindClosestPlayer()
     {
+        if (!isServer)
+            return;
+
         GameObject[] gos;
         gos = GameObject.FindGameObjectsWithTag("Player");
         GameObject closest = null;

@@ -95,7 +95,7 @@ public class ItemCollector : MonoBehaviour
             return (GameObject.FindGameObjectsWithTag("item_collectible").Length) > 0;
 
         }
-        return false;
+        return this.health > 0;
     }
 
 }
