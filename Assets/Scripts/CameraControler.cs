@@ -28,6 +28,8 @@ public class CameraControler : NetworkBehaviour
 
     private GameObject gameOverCanvas = null;
 
+    private int lastTrigger = -1;
+
     void Start()
     {
         if (!isLocalPlayer)
@@ -105,7 +107,7 @@ public class CameraControler : NetworkBehaviour
         gameOver = value;
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (!isLocalPlayer)
             return;
@@ -122,16 +124,21 @@ public class CameraControler : NetworkBehaviour
         }
         else if (other.gameObject.tag == "item_health" || other.gameObject.tag == "item_collectible")
         {
-            if (isLocalPlayer){
-                bool isAllCollected = !this.GetComponent<ItemCollector>().increaseItem(other.gameObject.tag);
-                CmdDestroyItem(other.gameObject);
-                gameOver = isAllCollected || gameOver;
-                if (gameOver){
-                    CmdSetGameOver(true);
+
+            if (other.GetInstanceID() != lastTrigger){
+
+                if (isLocalPlayer){
+                    bool isAllCollected = !this.GetComponent<ItemCollector>().increaseItem(other.gameObject.tag);
+                    CmdDestroyItem(other.gameObject);
+                    gameOver = isAllCollected || gameOver;
+                    if (gameOver){
+                        CmdSetGameOver(true);
+                    }
                 }
+
+                lastTrigger = other.GetInstanceID();
+
             }
-
-
 
             
         }
