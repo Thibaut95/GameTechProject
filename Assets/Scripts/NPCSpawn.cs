@@ -19,7 +19,7 @@ public class NPCSpawn : NetworkBehaviour
     {
         if (!isServer)
             return;
-            
+
         saved_time = Time.time;
     }
 
@@ -29,11 +29,11 @@ public class NPCSpawn : NetworkBehaviour
         if (!isServer)
             return;
 
-        if (Time.time - saved_time > 30)
+        if (Time.time - saved_time > 10)
         {
 
             GameObject npc = Instantiate(NPC);
-            npc.transform.GetChild(0).GetComponent<Animator>().SetBool("Moving",true);
+            npc.GetComponent<Animator>().SetBool("Moving",true);
             // TODO position player
 
             Debug.Log("npc spawned");

@@ -57,7 +57,6 @@ public class NPCMove : NetworkBehaviour
         if (!isServer)
             return;
 
-        Debug.Log("I am a robot");
         if (_destination != null)
         {
             Vector3 targetVector = _destination.transform.position;
