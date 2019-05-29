@@ -19,6 +19,8 @@ public class ItemCollector : MonoBehaviour
     private Text playerscore_txt;
     private Text opponent_txt;
 
+    private bool stateIncrase = false;
+
     private void Start()
     {
         healthBar=GameObject.Find("HUD").transform.Find("Health Bar").GetComponent<Slider>();
@@ -55,6 +57,17 @@ public class ItemCollector : MonoBehaviour
 
     }
 
+    void FixedUpdate()
+    {
+        if(stateIncrase)
+        {
+            this.score += 1;
+            playerscore_txt.text = "Player score : "+score;
+            opponent_txt.text = "Opponent score : "+(MaxCollectible - GameObject.FindGameObjectsWithTag("item_collectible").Length - score);
+            stateIncrase = false;
+        }
+    }
+
     public int getHealth()
     {
         return this.health;
@@ -88,10 +101,8 @@ public class ItemCollector : MonoBehaviour
         }
         else if (type == "item_collectible")
         {
-            this.score += 1;
-            playerscore_txt.text = "Player score : "+score;
-            opponent_txt.text = "Opponent score : "+(MaxCollectible - GameObject.FindGameObjectsWithTag("item_collectible").Length - score);
-
+            
+            stateIncrase = true;
             return (GameObject.FindGameObjectsWithTag("item_collectible").Length) > 0;
 
         }
