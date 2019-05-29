@@ -107,8 +107,8 @@ public class CameraControler : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // if (!isLocalPlayer)
-        //     return;
+        if (!isLocalPlayer)
+            return;
 
         Debug.Log(other.gameObject.tag);
 
@@ -130,9 +130,7 @@ public class CameraControler : NetworkBehaviour
                     CmdSetGameOver(true);
                 }
             }
-            else{
-                CmdDestroyItem(other.gameObject);
-            }
+
 
 
             
