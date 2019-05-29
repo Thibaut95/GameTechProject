@@ -2659,7 +2659,7 @@ MonoBehaviour:
   - {fileID: 80814973, guid: 01490be430b97317382e4ccc5a8f100e, type: 3}
   - {fileID: 730053918, guid: 56cda53e56cb49e5e9cd12ce2983f930, type: 3}
   - {fileID: 7697446686843348546, guid: a08096e819f984df5aa655d368ddea6b, type: 3}
-  - {fileID: 7878356208292236659, guid: 16da0657ec6ec684dabfb7fa08ea6194, type: 3}
+  - {fileID: 1181921010304908, guid: cf8576609aeb8cb499b95bbe9414c9eb, type: 3}
   m_CustomConfig: 1
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -3207,7 +3207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 120043252a81c9a4488944f4e7851592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NPC: {fileID: 7878356208292236659, guid: 16da0657ec6ec684dabfb7fa08ea6194, type: 3}
+  NPC: {fileID: 1181921010304908, guid: cf8576609aeb8cb499b95bbe9414c9eb, type: 3}
 --- !u!114 &833754444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3484,7 +3484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 120043252a81c9a4488944f4e7851592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NPC: {fileID: 7878356208292236659, guid: 16da0657ec6ec684dabfb7fa08ea6194, type: 3}
+  NPC: {fileID: 1181921010304908, guid: cf8576609aeb8cb499b95bbe9414c9eb, type: 3}
 --- !u!114 &910291692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4982,7 +4982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 120043252a81c9a4488944f4e7851592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NPC: {fileID: 7878356208292236659, guid: 16da0657ec6ec684dabfb7fa08ea6194, type: 3}
+  NPC: {fileID: 1181921010304908, guid: cf8576609aeb8cb499b95bbe9414c9eb, type: 3}
 --- !u!114 &1146389332
 MonoBehaviour:
   m_ObjectHideFlags: 0
