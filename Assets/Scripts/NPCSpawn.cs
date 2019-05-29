@@ -28,6 +28,7 @@ public class NPCSpawn : NetworkBehaviour
         {
 
             GameObject npc = Instantiate(NPC);
+            npc.transform.GetChild(0).GetComponent<Animator>().SetBool("Moving",true);
             // TODO position player
 
             Debug.Log("npc spawned");
