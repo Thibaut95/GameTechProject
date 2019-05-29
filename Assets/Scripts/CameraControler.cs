@@ -105,7 +105,7 @@ public class CameraControler : NetworkBehaviour
         gameOver = value;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (!isLocalPlayer)
             return;
