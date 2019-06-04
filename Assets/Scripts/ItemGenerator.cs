@@ -47,6 +47,7 @@ public class ItemGenerator : NetworkBehaviour
                     if (i < nbItem / 2)
                     {
                         item = Instantiate(items[0]);
+                        item.GetComponent<IdItem>().id=i;
                     }
                     else
                     {
@@ -57,6 +58,7 @@ public class ItemGenerator : NetworkBehaviour
                     item.transform.position = position;
                     i++;
                     item.transform.parent = transform;
+                    
                     NetworkServer.Spawn(item);
                 }
             }

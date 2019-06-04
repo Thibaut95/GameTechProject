@@ -44,6 +44,7 @@ public class CameraControler : NetworkBehaviour
     private Slider healthBar;
     private Text playerscore_txt;
     private Text opponent_txt;
+    private bool[] itemsCollected;
 
     void Start()
     {
@@ -64,6 +65,11 @@ public class CameraControler : NetworkBehaviour
         healthBar.value = health;
         playerscore_txt=GameObject.Find("HUD").transform.Find("player score").GetComponent<Text>();
         opponent_txt=GameObject.Find("HUD").transform.Find("opponent score").GetComponent<Text>();
+        itemsCollected= new bool[25];
+        for (int i = 0; i < itemsCollected.Length; i++)
+        {
+            itemsCollected[i]=false;
+        }
         MaxCollectible=25;
 
     }
@@ -122,7 +128,6 @@ public class CameraControler : NetworkBehaviour
             return;
 
         opponent_txt.text = "Opponent score : "+(MaxCollectible - GameObject.FindGameObjectsWithTag("item_collectible").Length - score);
-        Debug.Log(MaxCollectible);
     }
 
     [Command]
@@ -157,8 +162,9 @@ public class CameraControler : NetworkBehaviour
 
             // if (other.GetInstanceID() != lastTrigger){
 
-                
+                itemsCollected[other.gameObject.GetComponent<IdItem>().id]=true;
                 bool isAllCollected = !increaseItem(other.gameObject.tag);
+                
                 CmdDestroyItem(other.gameObject);
                 gameOver = isAllCollected || gameOver;
                 if (gameOver){
@@ -194,7 +200,14 @@ public class CameraControler : NetworkBehaviour
         }
         else if (type == "item_collectible")
         {
-            this.score += 1;
+            int nbItem=0;
+            foreach (var item in itemsCollected)
+            {
+                if(item)nbItem++;
+            }
+
+            score=nbItem;
+            
             playerscore_txt.text = "Player score : "+score;
             
             return (GameObject.FindGameObjectsWithTag("item_collectible").Length) > 0;
