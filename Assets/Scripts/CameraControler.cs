@@ -44,7 +44,7 @@ public class CameraControler : NetworkBehaviour
     private Slider healthBar;
     private Text playerscore_txt;
     private Text opponent_txt;
-    private bool[] itemsCollected;
+    private HashSet<int> itemsCollected;
 
     void Start()
     {
@@ -65,11 +65,8 @@ public class CameraControler : NetworkBehaviour
         healthBar.value = health;
         playerscore_txt=GameObject.Find("HUD").transform.Find("player score").GetComponent<Text>();
         opponent_txt=GameObject.Find("HUD").transform.Find("opponent score").GetComponent<Text>();
-        itemsCollected= new bool[25];
-        for (int i = 0; i < itemsCollected.Length; i++)
-        {
-            itemsCollected[i]=false;
-        }
+        itemsCollected= new HashSet<int>();
+
         MaxCollectible=25;
 
     }
@@ -162,8 +159,7 @@ public class CameraControler : NetworkBehaviour
 
             // if (other.GetInstanceID() != lastTrigger){
 
-                Debug.Log(other.gameObject.GetComponent<IdItem>().id);
-                itemsCollected[other.gameObject.GetComponent<IdItem>().id]=true;
+                itemsCollected.Add(other.GetInstanceID());
                 bool isAllCollected = !increaseItem(other.gameObject.tag);
                 
                 CmdDestroyItem(other.gameObject);
@@ -201,13 +197,9 @@ public class CameraControler : NetworkBehaviour
         }
         else if (type == "item_collectible")
         {
-            int nbItem=0;
-            foreach (var item in itemsCollected)
-            {
-                if(item)nbItem++;
-            }
+            
 
-            score=nbItem;
+            score=itemsCollected.Count;
             
             playerscore_txt.text = "Player score : "+score;
             

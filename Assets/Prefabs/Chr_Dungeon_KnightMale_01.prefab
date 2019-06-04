@@ -4135,7 +4135,6 @@ GameObject:
   - component: {fileID: 1321937221848632821}
   - component: {fileID: 6399885329771437887}
   - component: {fileID: 7324447997373122220}
-  - component: {fileID: 8188708907130602962}
   m_Layer: 0
   m_Name: Chr_Dungeon_KnightMale_01
   m_TagString: Player
@@ -4359,6 +4358,9 @@ MonoBehaviour:
   speed: 0.2
   jump: 5
   rotationSpeed: 2
+  health: 100
+  score: 0
+  MaxCollectible: 0
 --- !u!114 &7324447997373122220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4375,21 +4377,6 @@ MonoBehaviour:
   offsetHeight: 1
   offset: 5
   thrust: 3
---- !u!114 &8188708907130602962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4657827806761258762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad5a831a012b8f543917a2a46bbe9c65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  score: 0
-  MaxCollectible: 25
 --- !u!1 &4854912754362364405
 GameObject:
   m_ObjectHideFlags: 0

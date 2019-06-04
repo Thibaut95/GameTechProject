@@ -47,7 +47,6 @@ public class ItemGenerator : NetworkBehaviour
                     if (i < nbItem / 2)
                     {
                         item = Instantiate(items[0]);
-                        item.GetComponent<IdItem>().id=i;
                     }
                     else
                     {
