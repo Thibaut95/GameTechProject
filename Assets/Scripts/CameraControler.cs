@@ -125,20 +125,20 @@ public class CameraControler : NetworkBehaviour
         else if (other.gameObject.tag == "item_health" || other.gameObject.tag == "item_collectible")
         {
 
-            if (other.GetInstanceID() != lastTrigger){
+            // if (other.GetInstanceID() != lastTrigger){
 
-                if (isLocalPlayer){
-                    bool isAllCollected = !this.GetComponent<ItemCollector>().increaseItem(other.gameObject.tag);
-                    CmdDestroyItem(other.gameObject);
-                    gameOver = isAllCollected || gameOver;
-                    if (gameOver){
-                        CmdSetGameOver(true);
-                    }
+                
+                bool isAllCollected = !this.GetComponent<ItemCollector>().increaseItem(other.gameObject.tag);
+                CmdDestroyItem(other.gameObject);
+                gameOver = isAllCollected || gameOver;
+                if (gameOver){
+                    CmdSetGameOver(true);
                 }
+                
 
                 lastTrigger = other.GetInstanceID();
 
-            }
+            // }
 
             
         }

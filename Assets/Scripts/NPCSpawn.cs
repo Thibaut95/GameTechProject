@@ -29,7 +29,7 @@ public class NPCSpawn : NetworkBehaviour
         if (!isServer)
             return;
 
-        if (Time.time - saved_time > 10)
+        if (Time.time - saved_time > 100)
         {
 
             GameObject npc = Instantiate(NPC);

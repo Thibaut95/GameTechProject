@@ -60,17 +60,6 @@ public class ItemCollector : MonoBehaviour
 
     void FixedUpdate()
     {
-        
-        if(stateIncrase && counter > 50)
-        {
-            this.score += 1;
-            
-            stateIncrase = false;
-            counter = 0;
-        }
-        counter++;
-
-        playerscore_txt.text = "Player score : "+score;
         opponent_txt.text = "Opponent score : "+(MaxCollectible - GameObject.FindGameObjectsWithTag("item_collectible").Length - score);
     }
 
@@ -107,8 +96,9 @@ public class ItemCollector : MonoBehaviour
         }
         else if (type == "item_collectible")
         {
+            this.score += 1;
+            playerscore_txt.text = "Player score : "+score;
             
-            stateIncrase = true;
             return (GameObject.FindGameObjectsWithTag("item_collectible").Length) > 0;
 
         }
