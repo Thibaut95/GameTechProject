@@ -133,6 +133,21 @@ public class CameraControler : NetworkBehaviour
         NetworkServer.Destroy(item);
     }
 
+    public void SetGameOver(bool value)
+    {
+        if (isServer) {
+            gameOver = gameOver;
+        } else {
+            CmdSetGameOver (value);
+        }
+    }
+    
+    [Command]
+    void CmdSetGameOver(bool value)
+    {
+        SetGameOver(value);
+    }
+
 
     private void OnTriggerExit(Collider other)
     {
@@ -145,7 +160,7 @@ public class CameraControler : NetworkBehaviour
         {
             bool isPlayerDead = !removeHealth();
             
-            gameOver = isPlayerDead || gameOver;
+            CmdSetGameOver(isPlayerDead || gameOver);
             
         }
         else if (other.gameObject.tag == "item_health" || other.gameObject.tag == "item_collectible")
@@ -157,7 +172,8 @@ public class CameraControler : NetworkBehaviour
                 bool isAllCollected = !increaseItem(other.gameObject.tag);
                 
                 CmdDestroyItem(other.gameObject);
-                gameOver = isAllCollected || gameOver;
+
+                CmdSetGameOver(isAllCollected || gameOver);
                
                 
 
