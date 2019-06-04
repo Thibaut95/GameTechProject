@@ -162,6 +162,7 @@ public class CameraControler : NetworkBehaviour
 
             // if (other.GetInstanceID() != lastTrigger){
 
+                Debug.Log(other.gameObject.GetComponent<IdItem>().id);
                 itemsCollected[other.gameObject.GetComponent<IdItem>().id]=true;
                 bool isAllCollected = !increaseItem(other.gameObject.tag);
                 
