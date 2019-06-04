@@ -8,17 +8,7 @@ public class FireScript : MonoBehaviour
     [SerializeField]
     private GameObject explosionPrefabs;
     // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    
     void OnTriggerEnter(Collider other)
     {
         

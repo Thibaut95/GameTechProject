@@ -36,7 +36,6 @@ public class NPCSpawn : NetworkBehaviour
             npc.GetComponent<Animator>().SetBool("Moving",true);
             // TODO position player
 
-            Debug.Log("npc spawned");
             npc.GetComponent<NavMeshAgent>().enabled = false;
 
             npc.transform.position = this.transform.position;

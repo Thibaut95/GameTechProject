@@ -25,7 +25,8 @@ public class CameraControler : NetworkBehaviour
 
     private bool isgrounded = false;
 
-    private bool gameOver = false;
+    [SyncVar]
+    bool gameOver;
 
     private GameObject gameOverCanvas = null;
 
@@ -46,28 +47,32 @@ public class CameraControler : NetworkBehaviour
     private Text opponent_txt;
     private HashSet<int> itemsCollected;
 
+
+
     void Start()
     {
+        
+
+        gameOverCanvas = GameObject.Find("CanvasGameOver");
+
         if (!isLocalPlayer)
             return;
 
         animator = GetComponent<Animator>();
         networkAnimator = GetComponent<NetworkAnimator>();
+        GameObject.Find("CameraMenu").GetComponent<Camera>().enabled = false;
         camera3rd = transform.Find("Camera3rd").GetComponent<Camera>();
         cameraFPS = transform.Find("Camera2").GetComponent<Camera>();
         cameraFPS.enabled = false;
         camera3rd.enabled = true;
-        gameOverCanvas = GameObject.Find("tamere");
-        gameOverCanvas.SetActive(false);
-        Debug.Log(gameOverCanvas);
 
-        healthBar=GameObject.Find("HUD").transform.Find("Health Bar").GetComponent<Slider>();
+        healthBar = GameObject.Find("HUD").transform.Find("Health Bar").GetComponent<Slider>();
         healthBar.value = health;
-        playerscore_txt=GameObject.Find("HUD").transform.Find("player score").GetComponent<Text>();
-        opponent_txt=GameObject.Find("HUD").transform.Find("opponent score").GetComponent<Text>();
-        itemsCollected= new HashSet<int>();
+        playerscore_txt = GameObject.Find("HUD").transform.Find("player score").GetComponent<Text>();
+        opponent_txt = GameObject.Find("HUD").transform.Find("opponent score").GetComponent<Text>();
+        itemsCollected = new HashSet<int>();
 
-        MaxCollectible=25;
+        MaxCollectible = 25;
 
     }
 
@@ -75,22 +80,16 @@ public class CameraControler : NetworkBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-
-        if (health<=0){
-            gameOverCanvas.SetActive(true);
-            Time.timeScale = 0;
-            return;
-        }
 
         if (!isLocalPlayer)
             return;
 
+        opponent_txt.text = "Opponent score : " + (MaxCollectible - GameObject.FindGameObjectsWithTag("item_collectible").Length - score);
+
         float translation = Input.GetAxis("Vertical") * speed;
         float rotation = Input.GetAxis("Horizontal") * rotationSpeed;
-
-        // Debug.Log(translation);
 
         this.transform.Translate(0, 0, translation);
         this.transform.Rotate(0, rotation, 0);
@@ -113,19 +112,23 @@ public class CameraControler : NetworkBehaviour
             networkAnimator.SetTrigger("Death");
         }
 
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            bool isPlayerDead = !removeHealth();
+
+            CmdSetGameOver(isPlayerDead || gameOver);
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            networkAnimator.SetTrigger("Death");
+        }
+
         if (Input.GetKeyDown(KeyCode.G))
         {
             cameraFPS.enabled = !cameraFPS.enabled;
             camera3rd.enabled = !camera3rd.enabled;
         }
-    }
-
-    void FixedUpdate()
-    {
-         if (!isLocalPlayer)
-            return;
-
-        opponent_txt.text = "Opponent score : "+(MaxCollectible - GameObject.FindGameObjectsWithTag("item_collectible").Length - score);
     }
 
     [Command]
@@ -134,19 +137,36 @@ public class CameraControler : NetworkBehaviour
         NetworkServer.Destroy(item);
     }
 
-    public void SetGameOver(bool value)
-    {
-        if (isServer) {
-            gameOver = value;
-        } else {
-            CmdSetGameOver (value);
-        }
-    }
-    
+    // public void SetGameOver(bool value)
+    // {
+    //     if (isServer) {
+    //         gameOver = value;
+    //     } else {
+    //         CmdSetGameOver (value);
+    //     }
+    // }
+
     [Command]
     void CmdSetGameOver(bool value)
     {
-        SetGameOver(value);
+        gameOver = value;
+        if(gameOver)
+        {
+            RpcGameOver();
+        }
+        
+    }
+
+    [ClientRpc]
+    void RpcGameOver()
+    {
+        gameOverCanvas = GameObject.Find("CanvasGameOver");
+        if(gameOverCanvas!=null)
+        {
+        gameOverCanvas.transform.GetChild(0).gameObject.SetActive(true);
+        gameOverCanvas.transform.GetChild(1).gameObject.SetActive(true);
+        }
+        
     }
 
 
@@ -155,36 +175,34 @@ public class CameraControler : NetworkBehaviour
         if (!isLocalPlayer)
             return;
 
-        Debug.Log(other.gameObject.tag);
-
         if (other.gameObject.tag == "weapon" || other.gameObject.tag == "weapon_skeleton")
         {
             bool isPlayerDead = !removeHealth();
-            
-            // CmdSetGameOver(isPlayerDead || gameOver);
-            
+
+            CmdSetGameOver(isPlayerDead || gameOver);
+
         }
         else if (other.gameObject.tag == "item_health" || other.gameObject.tag == "item_collectible")
         {
 
             // if (other.GetInstanceID() != lastTrigger){
 
-                itemsCollected.Add(other.GetInstanceID());
-                bool isAllCollected = !increaseItem(other.gameObject.tag);
-                
-                CmdDestroyItem(other.gameObject);
+            itemsCollected.Add(other.GetInstanceID());
+            bool isAllCollected = !increaseItem(other.gameObject.tag);
 
-                // CmdSetGameOver(isAllCollected || gameOver);
-               
-                
+            CmdDestroyItem(other.gameObject);
 
-                lastTrigger = other.GetInstanceID();
+            // CmdSetGameOver(isAllCollected || gameOver);
+
+
+
+            lastTrigger = other.GetInstanceID();
 
             // }
 
-            
+
         }
-        
+
 
     }
 
@@ -206,12 +224,12 @@ public class CameraControler : NetworkBehaviour
         }
         else if (type == "item_collectible")
         {
-            
 
-            score=itemsCollected.Count;
-            
-            playerscore_txt.text = "Player score : "+score;
-            
+
+            score = itemsCollected.Count;
+
+            playerscore_txt.text = "Player score : " + score;
+
             return (GameObject.FindGameObjectsWithTag("item_collectible").Length) > 0;
 
         }

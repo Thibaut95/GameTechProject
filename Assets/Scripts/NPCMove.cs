@@ -42,7 +42,7 @@ public class NPCMove : NetworkBehaviour
 
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (!isServer)
             return;
