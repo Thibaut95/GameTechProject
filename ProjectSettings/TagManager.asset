@@ -11,6 +11,7 @@ TagManager:
   - game_over_componenent
   - objectif
   - skeleton
+  - weapon_skeleton
   layers:
   - Default
   - TransparentFX
