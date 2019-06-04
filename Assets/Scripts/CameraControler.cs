@@ -25,7 +25,7 @@ public class CameraControler : NetworkBehaviour
 
     private bool isgrounded = false;
 
-    [SyncVar] private bool gameOver = false;
+    private bool gameOver = false;
 
     private GameObject gameOverCanvas = null;
 
@@ -77,14 +77,15 @@ public class CameraControler : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isLocalPlayer)
-            return;
 
-        if (gameOver){
+        if (health<=0){
             gameOverCanvas.SetActive(true);
             Time.timeScale = 0;
             return;
         }
+
+        if (!isLocalPlayer)
+            return;
 
         float translation = Input.GetAxis("Vertical") * speed;
         float rotation = Input.GetAxis("Horizontal") * rotationSpeed;
@@ -160,7 +161,7 @@ public class CameraControler : NetworkBehaviour
         {
             bool isPlayerDead = !removeHealth();
             
-            CmdSetGameOver(isPlayerDead || gameOver);
+            // CmdSetGameOver(isPlayerDead || gameOver);
             
         }
         else if (other.gameObject.tag == "item_health" || other.gameObject.tag == "item_collectible")
@@ -173,7 +174,7 @@ public class CameraControler : NetworkBehaviour
                 
                 CmdDestroyItem(other.gameObject);
 
-                CmdSetGameOver(isAllCollected || gameOver);
+                // CmdSetGameOver(isAllCollected || gameOver);
                
                 
 
