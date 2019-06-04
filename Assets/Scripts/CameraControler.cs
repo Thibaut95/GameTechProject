@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CameraControler : NetworkBehaviour
 {
@@ -51,13 +52,22 @@ public class CameraControler : NetworkBehaviour
 
     void Start()
     {
-        
-
         gameOverCanvas = GameObject.Find("CanvasGameOver");
+
+        if (isServer) // host runs
+        {
+            transform.position = new Vector3(86,-12,-149);
+        }
+        else // client runs
+        {
+            transform.position = new Vector3(149,-12,189);
+        }
+
 
         if (!isLocalPlayer)
             return;
 
+        transform.Find("Sphere").GetComponent<Renderer>().material.color = Color.blue;
         animator = GetComponent<Animator>();
         networkAnimator = GetComponent<NetworkAnimator>();
         GameObject.Find("CameraMenu").GetComponent<Camera>().enabled = false;
@@ -75,8 +85,6 @@ public class CameraControler : NetworkBehaviour
         MaxCollectible = 25;
 
     }
-
-
 
 
     // Update is called once per frame
@@ -112,17 +120,18 @@ public class CameraControler : NetworkBehaviour
             networkAnimator.SetTrigger("Death");
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            bool isPlayerDead = !removeHealth();
+        // if (Input.GetKeyDown(KeyCode.R))
+        // {
+        //     bool isPlayerDead = !removeHealth();
 
-            CmdSetGameOver(isPlayerDead || gameOver);
-        }
+        //     if (isPlayerDead)
+        //         CmdSetGameOver("dead");
+        // }
 
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            networkAnimator.SetTrigger("Death");
-        }
+        // if (Input.GetKeyDown(KeyCode.K))
+        // {
+        //     networkAnimator.SetTrigger("Death");
+        // }
 
         if (Input.GetKeyDown(KeyCode.G))
         {
@@ -137,40 +146,52 @@ public class CameraControler : NetworkBehaviour
         NetworkServer.Destroy(item);
     }
 
-    // public void SetGameOver(bool value)
-    // {
-    //     if (isServer) {
-    //         gameOver = value;
-    //     } else {
-    //         CmdSetGameOver (value);
-    //     }
-    // }
-
     [Command]
-    void CmdSetGameOver(bool value)
+    void CmdSetGameOver(string value)
     {
-        gameOver = value;
-        if(gameOver)
-        {
-            RpcGameOver();
-        }
-        
+
+        RpcGameOver(value);
+
     }
 
     [ClientRpc]
-    void RpcGameOver()
+    void RpcGameOver(string value)
     {
         gameOverCanvas = GameObject.Find("CanvasGameOver");
-        if(gameOverCanvas!=null)
+        if (gameOverCanvas != null)
         {
-        gameOverCanvas.transform.GetChild(0).gameObject.SetActive(true);
-        gameOverCanvas.transform.GetChild(1).gameObject.SetActive(true);
+            gameOverCanvas.transform.GetChild(0).gameObject.SetActive(true);
+            gameOverCanvas.transform.GetChild(1).gameObject.SetActive(true);
+            gameOverCanvas.transform.GetChild(2).gameObject.SetActive(true);
+            if (value == "dead")
+            {
+                if (isLocalPlayer)
+                {
+                    networkAnimator.SetTrigger("Death");
+                    gameOverCanvas.transform.Find("Text").transform.GetChild(0).GetComponent<Text>().text = "You lose by death";
+                }
+                else
+                {
+                    gameOverCanvas.transform.Find("Text").transform.GetChild(0).GetComponent<Text>().text = "You win by the death of your opponent";
+                }
+            }
+            else if (value == "item")
+            {
+                if (isLocalPlayer)
+                {
+                    gameOverCanvas.transform.Find("Text").transform.GetChild(0).GetComponent<Text>().text = "Your opponent win by collecting all items";
+                }
+                else
+                {
+                    gameOverCanvas.transform.Find("Text").transform.GetChild(0).GetComponent<Text>().text = "You win by collecting all items";
+                }
+            }
+
         }
-        
     }
 
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (!isLocalPlayer)
             return;
@@ -179,31 +200,27 @@ public class CameraControler : NetworkBehaviour
         {
             bool isPlayerDead = !removeHealth();
 
-            CmdSetGameOver(isPlayerDead || gameOver);
+            if (isPlayerDead)
+            {
+                CmdSetGameOver("dead");
+            }
 
         }
         else if (other.gameObject.tag == "item_health" || other.gameObject.tag == "item_collectible")
         {
-
-            // if (other.GetInstanceID() != lastTrigger){
-
             itemsCollected.Add(other.GetInstanceID());
             bool isAllCollected = !increaseItem(other.gameObject.tag);
 
             CmdDestroyItem(other.gameObject);
 
-            // CmdSetGameOver(isAllCollected || gameOver);
-
+            if (isAllCollected)
+            {
+                CmdSetGameOver("item");
+            }
 
 
             lastTrigger = other.GetInstanceID();
-
-            // }
-
-
         }
-
-
     }
 
     public bool removeHealth()
@@ -224,8 +241,6 @@ public class CameraControler : NetworkBehaviour
         }
         else if (type == "item_collectible")
         {
-
-
             score = itemsCollected.Count;
 
             playerscore_txt.text = "Player score : " + score;
@@ -252,4 +267,16 @@ public class CameraControler : NetworkBehaviour
         }
     }
 
+    void OnDestroy()
+    {
+        GameObject.Find("CameraMenu").GetComponent<Camera>().enabled = true;
+        gameOverCanvas = GameObject.Find("CanvasGameOver");
+        if (gameOverCanvas != null)
+        {
+            gameOverCanvas.transform.GetChild(0).gameObject.SetActive(false);
+            gameOverCanvas.transform.GetChild(1).gameObject.SetActive(false);
+            gameOverCanvas.transform.GetChild(2).gameObject.SetActive(false);
+        }
+        SceneManager.LoadScene(0);
+    }
 }

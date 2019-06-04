@@ -70,8 +70,4 @@ public class ItemGenerator : NetworkBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
- 
-    }
 }

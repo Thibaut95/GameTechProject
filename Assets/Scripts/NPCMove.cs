@@ -68,7 +68,7 @@ public class NPCMove : NetworkBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
          if (!isServer)
             return;
