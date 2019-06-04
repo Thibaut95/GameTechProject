@@ -4389,7 +4389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   score: 0
-  MaxCollectible: 26
+  MaxCollectible: 25
 --- !u!1 &4854912754362364405
 GameObject:
   m_ObjectHideFlags: 0
@@ -8852,15 +8852,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b51c1ac56d74dea4780d54225834c595, type: 3}
---- !u!4 &1707198341175235235 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4662633486641870, guid: b51c1ac56d74dea4780d54225834c595,
-    type: 3}
-  m_PrefabInstance: {fileID: 1702852670908446829}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1704358679639672381 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1871691174411856, guid: b51c1ac56d74dea4780d54225834c595,
+    type: 3}
+  m_PrefabInstance: {fileID: 1702852670908446829}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1707198341175235235 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4662633486641870, guid: b51c1ac56d74dea4780d54225834c595,
     type: 3}
   m_PrefabInstance: {fileID: 1702852670908446829}
   m_PrefabAsset: {fileID: 0}
