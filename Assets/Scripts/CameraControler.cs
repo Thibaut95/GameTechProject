@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class CameraControler : NetworkBehaviour
 {
@@ -30,6 +31,20 @@ public class CameraControler : NetworkBehaviour
 
     private int lastTrigger = -1;
 
+    [SerializeField]
+    private int health = 100;
+
+    [SerializeField]
+    private int score = 0;
+
+
+    [SerializeField]
+    private int MaxCollectible;
+
+    private Slider healthBar;
+    private Text playerscore_txt;
+    private Text opponent_txt;
+
     void Start()
     {
         if (!isLocalPlayer)
@@ -44,6 +59,12 @@ public class CameraControler : NetworkBehaviour
         gameOverCanvas = GameObject.Find("tamere");
         gameOverCanvas.SetActive(false);
         Debug.Log(gameOverCanvas);
+
+        healthBar=GameObject.Find("HUD").transform.Find("Health Bar").GetComponent<Slider>();
+        healthBar.value = health;
+        playerscore_txt=GameObject.Find("HUD").transform.Find("player score").GetComponent<Text>();
+        opponent_txt=GameObject.Find("HUD").transform.Find("opponent score").GetComponent<Text>();
+        MaxCollectible=25;
 
     }
 
@@ -95,6 +116,15 @@ public class CameraControler : NetworkBehaviour
         }
     }
 
+    void FixedUpdate()
+    {
+         if (!isLocalPlayer)
+            return;
+
+        opponent_txt.text = "Opponent score : "+(MaxCollectible - GameObject.FindGameObjectsWithTag("item_collectible").Length - score);
+        Debug.Log(MaxCollectible);
+    }
+
     [Command]
     private void CmdDestroyItem(GameObject item)
     {
@@ -116,7 +146,7 @@ public class CameraControler : NetworkBehaviour
 
         if (other.gameObject.tag == "weapon" && isLocalPlayer)
         {
-            bool isPlayerDead = !this.GetComponent<ItemCollector>().removeHealth();
+            bool isPlayerDead = !removeHealth();
             gameOver = isPlayerDead || gameOver;
             if (gameOver){
                 CmdSetGameOver(true);
@@ -128,7 +158,7 @@ public class CameraControler : NetworkBehaviour
             // if (other.GetInstanceID() != lastTrigger){
 
                 
-                bool isAllCollected = !this.GetComponent<ItemCollector>().increaseItem(other.gameObject.tag);
+                bool isAllCollected = !increaseItem(other.gameObject.tag);
                 CmdDestroyItem(other.gameObject);
                 gameOver = isAllCollected || gameOver;
                 if (gameOver){
@@ -144,6 +174,33 @@ public class CameraControler : NetworkBehaviour
         }
         
 
+    }
+
+    public bool removeHealth()
+    {
+        this.health -= 5;
+        healthBar.value = this.health;
+
+        return health > 0;
+    }
+
+    public bool increaseItem(string type)
+    {
+        if (type == "item_health")
+        {
+            this.health += 10;
+            if (this.health > 100) this.health = 100;
+            healthBar.value = this.health;
+        }
+        else if (type == "item_collectible")
+        {
+            this.score += 1;
+            playerscore_txt.text = "Player score : "+score;
+            
+            return (GameObject.FindGameObjectsWithTag("item_collectible").Length) > 0;
+
+        }
+        return this.health > 0;
     }
 
     void OnCollisionEnter(Collision theCollision)

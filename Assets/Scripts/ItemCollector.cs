@@ -19,8 +19,6 @@ public class ItemCollector : MonoBehaviour
     private Text playerscore_txt;
     private Text opponent_txt;
 
-    private bool stateIncrase = false;
-    private int counter = 0;
 
     private void Start()
     {
@@ -58,10 +56,11 @@ public class ItemCollector : MonoBehaviour
 
     }
 
-    void FixedUpdate()
-    {
-        opponent_txt.text = "Opponent score : "+(MaxCollectible - GameObject.FindGameObjectsWithTag("item_collectible").Length - score);
-    }
+    // void FixedUpdate()
+    // {
+    //     opponent_txt.text = "Opponent score : "+(MaxCollectible - GameObject.FindGameObjectsWithTag("item_collectible").Length - score);
+    //     Debug.Log(score);
+    // }
 
     public int getHealth()
     {
