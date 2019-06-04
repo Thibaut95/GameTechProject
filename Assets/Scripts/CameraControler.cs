@@ -25,7 +25,7 @@ public class CameraControler : NetworkBehaviour
 
     private bool isgrounded = false;
 
-    private bool gameOver = false;
+    [SyncVar] private bool gameOver = false;
 
     private GameObject gameOverCanvas = null;
 
@@ -134,11 +134,6 @@ public class CameraControler : NetworkBehaviour
     }
 
 
-    [Command]
-    private void CmdSetGameOver(bool value){
-        gameOver = value;
-    }
-
     private void OnTriggerExit(Collider other)
     {
         if (!isLocalPlayer)
@@ -149,10 +144,9 @@ public class CameraControler : NetworkBehaviour
         if (other.gameObject.tag == "weapon" || other.gameObject.tag == "weapon_skeleton")
         {
             bool isPlayerDead = !removeHealth();
+            
             gameOver = isPlayerDead || gameOver;
-            if (gameOver){
-                CmdSetGameOver(true);
-            }
+            
         }
         else if (other.gameObject.tag == "item_health" || other.gameObject.tag == "item_collectible")
         {
@@ -164,9 +158,7 @@ public class CameraControler : NetworkBehaviour
                 
                 CmdDestroyItem(other.gameObject);
                 gameOver = isAllCollected || gameOver;
-                if (gameOver){
-                    CmdSetGameOver(true);
-                }
+               
                 
 
                 lastTrigger = other.GetInstanceID();
