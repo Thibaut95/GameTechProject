@@ -15,6 +15,8 @@ public class NPCMove : NetworkBehaviour
 
     bool navMeshToggle = true;
 
+    private NetworkAnimator networkAnimator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +37,8 @@ public class NPCMove : NetworkBehaviour
 
             saved_time = Time.time;
         }
+
+        networkAnimator = GetComponent<NetworkAnimator>();
 
     }
 
@@ -64,6 +68,17 @@ public class NPCMove : NetworkBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+         if (!isServer)
+            return;
+
+        if (other.gameObject.tag == "weapon")
+        {
+            NetworkServer.Destroy(this.gameObject);
+        }
+    }
+
     private GameObject FindClosestPlayer()
     {
 
@@ -81,6 +96,10 @@ public class NPCMove : NetworkBehaviour
                 closest = go;
                 distance = curDistance;
             }
+        }
+        if(distance<50)
+        {
+            networkAnimator.SetTrigger("Slash");
         }
         return closest;
     }

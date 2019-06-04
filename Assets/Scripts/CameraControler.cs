@@ -146,7 +146,7 @@ public class CameraControler : NetworkBehaviour
 
         Debug.Log(other.gameObject.tag);
 
-        if (other.gameObject.tag == "weapon" && isLocalPlayer)
+        if (other.gameObject.tag == "weapon" || other.gameObject.tag == "weapon_skeleton")
         {
             bool isPlayerDead = !removeHealth();
             gameOver = isPlayerDead || gameOver;

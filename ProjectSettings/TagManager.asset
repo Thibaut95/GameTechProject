@@ -10,6 +10,7 @@ TagManager:
   - item_collectible
   - game_over_componenent
   - objectif
+  - skeleton
   layers:
   - Default
   - TransparentFX
