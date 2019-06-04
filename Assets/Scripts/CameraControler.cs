@@ -136,7 +136,7 @@ public class CameraControler : NetworkBehaviour
     public void SetGameOver(bool value)
     {
         if (isServer) {
-            gameOver = gameOver;
+            gameOver = value;
         } else {
             CmdSetGameOver (value);
         }
